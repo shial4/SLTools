@@ -1,14 +1,5 @@
-//
-//  SLAuthenticator.swift
-//  SLTools
-//
-//  Created by Shial on 22/8/17.
-//
-//
-
 import Kitura
 import KituraNet
-import LoggerAPI
 
 public typealias Token = String
 

@@ -1,11 +1,3 @@
-//
-//  SLRouteController.swift
-//  SLTools
-//
-//  Created by Shial on 24/8/17.
-//
-//
-
 import Foundation
 import Kitura
 

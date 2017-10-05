@@ -1,11 +1,3 @@
-//
-//  SLValidator.swift
-//  SLTools
-//
-//  Created by Shial on 24/8/17.
-//
-//
-
 import Foundation
 
 public enum SLValidationError: Error {
