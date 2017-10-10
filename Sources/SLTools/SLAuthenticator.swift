@@ -18,7 +18,7 @@ public struct Credentials {
 }
 
 public protocol SLAuthentication {
-    static func authorise(_ token: Token) throws -> Bool
+    static func authorise(_ token: Token) throws -> Self?
     static func register(_ credentials: Credentials) throws -> Self?
     static func authenticate(_ credentials: Credentials) throws -> Self?
 }
@@ -30,17 +30,24 @@ public class SLAuthenticator<T: SLAuthentication>: RouterMiddleware {
         guard let auth = request.headers["Authorization"]?.components(separatedBy: " "),
             auth.count == 2, let type = auth.first else {
                 try response.status(HTTPStatusCode.unauthorized).send(json: ["error":"unauthorized"]).end()
-            return
+                return
         }
         switch type {
         case "Basic":
-            guard let token = auth.last, try T.authorise(token) else {
+            guard let token = auth.last, let client = try T.authorise(token) else {
                 try response.status(HTTPStatusCode.unauthorized).send(json: ["error":"unauthorized"]).end()
                 return
             }
+            request.userInfo["SLAuthenticationClientKey"] = client
             next()
         default:
             try response.status(HTTPStatusCode.unauthorized).send(json: ["error":"unauthorized"]).end()
         }
+    }
+}
+
+extension RouterRequest {
+    public func client<T:SLAuthentication>() -> T? {
+        return userInfo["SLAuthenticationClientKey"] as? T
     }
 }
