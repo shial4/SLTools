@@ -38,6 +38,7 @@ public class SLAuthenticator<T: SLAuthentication>: RouterMiddleware {
                 try response.status(HTTPStatusCode.unauthorized).send(json: ["error":"unauthorized"]).end()
                 return
             }
+            request.userInfo["SLAuthenticationTokenKey"] = token
             request.userInfo["SLAuthenticationClientKey"] = client
             next()
         default:
@@ -47,6 +48,9 @@ public class SLAuthenticator<T: SLAuthentication>: RouterMiddleware {
 }
 
 extension RouterRequest {
+    public func token() -> String? {
+        return userInfo["SLAuthenticationTokenKey"] as? String
+    }
     public func client<T:SLAuthentication>() -> T? {
         return userInfo["SLAuthenticationClientKey"] as? T
     }
