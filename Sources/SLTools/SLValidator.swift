@@ -49,8 +49,10 @@ public enum SLValidators {
 
 extension String {
     public func valid(_ validator: SLValidators) -> Bool {
-        let test = NSPredicate(format: "SELF MATCHES %@", validator.regex())
-        return test.evaluate(with: self)
+        if let _ = self.range(of: validator.regex(), options: .regularExpression) {
+            return true
+        }
+        return false
     }
     
     public func validPassword(_ validator: SLValidators = .UpperAlphaLowerAlphaNumericSpecial(8, 32)) -> Bool {
