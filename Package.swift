@@ -11,8 +11,8 @@ let package = Package(
             targets: ["SLTools"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/IBM-Swift/Kitura.git", from: "1.7.9"),
-        .package(url: "https://github.com/IBM-Swift/BlueCryptor.git", from: "0.8.17"),
+        .package(url: "https://github.com/IBM-Swift/Kitura.git", from: "2.0.0"),
+        .package(url: "https://github.com/IBM-Swift/BlueCryptor.git", from: "0.8.18"),
     ],
     targets: [
         .target(
